@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <Requirements/>
-      <InventoryStart/>
+      {/* <InventoryStart/> */}
       <InventoryRefactored/>
     </>
   )

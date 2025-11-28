@@ -22,6 +22,7 @@ const Inventory = () => {
   const isSuccess = formStatus === "success";
   const isError = formStatus === "error";
   const isButtonDisabled = formStatus === "empty";
+  const totalProducts = products.length;
 
   const addNewItemToInventory = () => {
     const existingProduct = products.find((product) => product.title === newProduct.title);
@@ -84,6 +85,8 @@ const Inventory = () => {
       {/* List items */}
       <div className="card">
         <h2>List Products</h2>
+        <h2>List Products</h2>
+        <p>Total Products: {totalProducts}</p>
         {products.map((product) => (
           <div key={product.title}>
             Title: {product.title} — Price: {product.price} — Quantity: {product.quantity}

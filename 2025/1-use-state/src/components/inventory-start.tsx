@@ -11,6 +11,7 @@ const Inventory = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [productTitle, setProductTitle] = useState<string>("");
   const [productPrice, setProductPrice] = useState<string>("");
+  const [totalProducts, setTotalProducts] = useState<number>(0);
   const [isError, setIsError] = useState<boolean | null>(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
   const [isSuccess, setIsSuccess] = useState<boolean | null>(null);
@@ -36,6 +37,7 @@ const Inventory = () => {
         quantity: 1,
       },
     ]);
+    setTotalProducts(prev => prev+1);
     setIsSuccess(true);
     setIsError(false);
     setIsButtonDisabled(false);
@@ -45,6 +47,7 @@ const Inventory = () => {
     setProducts(products.filter((product) => product.title !== title));
     setIsSuccess(false);
     setIsError(false);
+    setTotalProducts(prev => prev-1);
   };
 
   return (
@@ -76,6 +79,8 @@ const Inventory = () => {
       {/* List items */}
       <div className="card">
         <h2>List Products</h2>
+        <p>Total Products: {totalProducts}</p>
+        <hr/>
         {products.map((product) => (
           <div key={product.title}>
             Title: {product.title} — Price: {product.price} — Quantity:{" "}
