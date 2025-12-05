@@ -1,6 +1,6 @@
 import './App.css'
 import InventoryStart from './components/inventory-start';
-import InventoryUseReducer from './components/inventory-useReducer';
+import InventoryUseReducer from './components/inventory-useReducer.jsx';
 import Requirements from './components/requirements';
 
 function App() {

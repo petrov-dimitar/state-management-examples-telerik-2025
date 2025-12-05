@@ -32,7 +32,7 @@ const Inventory = () => {
     price: "",
   });
   const [formStatus, setFormStatus] = useState<"empty" | "typing" | "success" | "error">("empty");
-  
+
   const isSuccess = formStatus === "success";
   const isError = formStatus === "error";
   const isButtonDisabled = formStatus === "empty";
@@ -54,7 +54,6 @@ const Inventory = () => {
       },
     ]);
 
-    setNewProduct({ title: "", price: "" });
     setFormStatus("success");
   };
 

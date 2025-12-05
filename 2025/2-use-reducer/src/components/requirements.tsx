@@ -1,12 +1,3 @@
-import { useState } from "react";
-import { Button, Input } from "antd";
-
-type Product = {
-  title: string;
-  price: string;
-  quantity?: number;
-};
-
 const Requirements = () => {
     return (
    <div className="card">

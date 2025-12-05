@@ -1,59 +1,34 @@
-import { useState } from "react";
 import { Button, Input } from "antd";
+import { useReducer } from "react";
+import { productsReducer } from "../store/productsReducer";
 
-type Product = {
-  title: string;
-  price: number;
-  quantity?: number;
-};
-
-const Inventory = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [newProduct, setNewProduct] = useState<{ title: string; price: string }>({
+const initialState = {
+  products: [],
+  newProduct: {
     title: "",
     price: "",
-  });
-  const [formStatus, setFormStatus] = useState<"empty" | "typing" | "success" | "error">("empty");
-  
+  },
+  formStatus: 'empty'
+}
+
+const Inventory = () => {
+  const [{ products, formStatus, newProduct }, disptch] = useReducer(productsReducer, initialState);
+
   const isSuccess = formStatus === "success";
   const isError = formStatus === "error";
   const isButtonDisabled = formStatus === "empty";
   const totalProducts = products.length;
 
   const addNewItemToInventory = () => {
-    const existingProduct = products.find((product) => product.title === newProduct.title);
-    if (existingProduct) {
-      setFormStatus("error");
-      return;
-    }
-
-    setProducts((prev) => [
-      ...prev,
-      {
-        title: newProduct.title,
-        price: parseFloat(newProduct.price) || 0,
-        quantity: 1,
-      },
-    ]);
-
-    setNewProduct({ title: "", price: "" });
-    setFormStatus("success");
+    disptch({ type: 'ADD_ITEM' });
   };
 
-  const onChangeFormField = (fieldName: "title" | "price", value: string) => {
-    setFormStatus("typing");
-    setNewProduct((current) => ({
-      ...current,
-      [fieldName]: value,
-    }));
-
-    if (value.length === 0) {
-      setFormStatus("empty");
-    }
+  const onChangeFormField = (fieldName, value) => {
+    disptch({ type: 'CHANGE_FIELD', values: { fieldName, value } });
   };
 
-  const deleteProduct = (title: string) => {
-    setProducts(products.filter((product) => product.title !== title));
+  const deleteProduct = (title) => {
+    disptch({ type: 'DELETE_ITEM', values: { title } });
   };
 
   return (
@@ -80,7 +55,6 @@ const Inventory = () => {
 
       {/* List items */}
       <div className="card">
-        <h2>List Products</h2>
         <h2>List Products</h2>
         <p>Total Products: {totalProducts}</p>
         {products.map((product) => (

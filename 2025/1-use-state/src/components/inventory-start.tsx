@@ -28,7 +28,7 @@ const Inventory = () => {
       setIsButtonDisabled(false);
       return;
     }
-    
+
     setProducts((prev) => [
       ...prev,
       {
@@ -37,7 +37,7 @@ const Inventory = () => {
         quantity: 1,
       },
     ]);
-    setTotalProducts(prev => prev+1);
+    setTotalProducts(prev => prev + 1);
     setIsSuccess(true);
     setIsError(false);
     setIsButtonDisabled(false);
@@ -47,7 +47,7 @@ const Inventory = () => {
     setProducts(products.filter((product) => product.title !== title));
     setIsSuccess(false);
     setIsError(false);
-    setTotalProducts(prev => prev-1);
+    setTotalProducts(prev => prev - 1);
   };
 
   return (
@@ -72,15 +72,15 @@ const Inventory = () => {
         <Button disabled={isButtonDisabled} onClick={addNewItemToInventory}>
           Add Product to inventory
         </Button>
-          {isSuccess && <div className="success">Successfully added item</div>}
-          {isError && <div className="error">Error Could not add</div>}
+        {isSuccess && <div className="success">Successfully added item</div>}
+        {isError && <div className="error">Error Could not add</div>}
       </div>
 
       {/* List items */}
       <div className="card">
         <h2>List Products</h2>
         <p>Total Products: {totalProducts}</p>
-        <hr/>
+        <hr />
         {products.map((product) => (
           <div key={product.title}>
             Title: {product.title} — Price: {product.price} — Quantity:{" "}
