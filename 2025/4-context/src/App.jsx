@@ -1,35 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import React, { createContext, useState, useContext } from 'react';
+
+const userContext = createContext()
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [username, setUsername] = useState('gorg2213')
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <userContext.Provider value={{ username, setUsername }}>
+      <div className="App border">
+        <h3>App Component</h3>
+        <label>Change Username: </label>
+        <input onChange={(e) => setUsername(e.target.value)} />
+        <AddTodoComponent />
+        <ListTodoComponent />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </userContext.Provider>
+  );
+}
+
+function AddTodoComponent() {
+  return (
+    <div className='border'>
+      <h3>Add Todo Component</h3>
+    </div>
+  );
+}
+
+function ListTodoComponent() {
+  return (
+    <div className='border'>
+      <h3>List Of Todos Component</h3>
+      <TodoItemComponent />
+    </div>
+  );
+}
+
+function TodoItemComponent() {
+  return (
+    <div className='border'>
+      <h3>Todo Item Component</h3>
+      <TodoItemNoteComponent />
+    </div>
   )
 }
 
-export default App
+function TodoItemNoteComponent() {
+  const { username } = useContext(userContext)
+  return (
+    <div className='border'>
+      <h3 >Todo Item Note</h3>
+      <span>User: {username}</span>
+    </div>
+  )
+}
+
+export default App;

@@ -1,35 +1,64 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import React, { createContext, useReducer, useContext } from 'react';
+
+const userContext = createContext()
+
+function reducerCustomFunction(state, action) {
+  if (action.name === "set_username") {
+    return { ...state, username: action.value }
+  }
+  return state;
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [state, dispatch] = useReducer(reducerCustomFunction, { username: 'geofskld' })
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <userContext.Provider value={{ state, dispatch }}>
+      <div className="App border">
+        <h3>App Component</h3>
+        <AddTodoComponent />
+        <ListTodoComponent />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </userContext.Provider>
+  );
+}
+
+function AddTodoComponent() {
+  return (
+    <div className='border'>
+      <h3>Add Todo Component</h3>
+    </div>
+  );
+}
+
+function ListTodoComponent() {
+  return (
+    <div className='border'>
+      <h3>List Of Todos Component</h3>
+      <TodoItemComponent />
+    </div>
+  );
+}
+
+function TodoItemComponent() {
+  return (
+    <div className='border'>
+      <h3>Todo Item Component</h3>
+      <TodoItemNoteComponent />
+    </div>
   )
 }
 
-export default App
+function TodoItemNoteComponent() {
+  const { state: { username }, dispatch } = useContext(userContext)
+  return (
+    <div className='border'>
+      <h3 >Todo Item Note</h3>
+      <input value={username} onChange={e => dispatch({ name: 'set_username', value: e.target.value })} />
+      <span>User: {username}</span>
+    </div>
+  )
+}
+
+export default App;
